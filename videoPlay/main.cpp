@@ -12,44 +12,9 @@
 #if 1
 int main(int argc, char* argv[])
 {
-    std::string filename = "ipaddress.cfg"; // 存储ip地址的文件名
-    std::string storageIpaddr;              // 从文件中读取到的ip地址
+    //获取存储的ip地址
+    std::string ipaddr = C_Terminal::GetStorageIp();
 
-    // 读取文件内容
-    std::ifstream infile(filename);
-    if (infile.is_open()) {
-        getline(infile, storageIpaddr);     // 从文件中将ip地址读取出来
-        infile.close();
-    }
-    else {
-        std::cerr << "Unable to open file for reading: " << filename << std::endl;
-    }
-
-    std::cout << "Please input server ip ,if not input default ip=" << storageIpaddr << " server ip:";
-
-    //获取用户输入的服务器IP地址
-    std::string ipaddr;
-    //std::cin >> ipaddr;
-    // 读取一行输入内容
-    std::getline(std::cin, ipaddr);
-    if (ipaddr.length() == 0) {
-        ipaddr = storageIpaddr; //用户没有输入ip时默认使用配置文件中的ip地址
-    }
-
-    std::cout << "Connect Server ip:" << ipaddr << std::endl;
-
-    // 更新配置文件中的ip地址为最后输入的ip地址
-    std::ofstream outfile(filename);  // 默认模式是覆盖写入
-    if (outfile.is_open()) {
-        outfile << ipaddr;
-        outfile.close();
-    }
-    else {
-        std::cerr << "Unable to open file for writing: " << filename << std::endl;
-    }
-    //!!!! 以上内容只是为了记录最后一次输入的ip地址避免多次连接同一服务器设备时重复输入的问题
-
-    
     C_Terminal* terminal = new C_Terminal();
     //在新起的线程中接收网络数据解码渲染
     std::thread mythread([terminal, ipaddr]() { terminal->Run(ipaddr); });

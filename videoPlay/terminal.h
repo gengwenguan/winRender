@@ -15,6 +15,8 @@ class C_Terminal : public C_TcpClient::C_Listener,
                    public C_H264Decode::C_Listener
 {
 public:
+    //获取最后一次用户输入的ip地址，同时也存储用户最后输入的ip地址
+    static std::string GetStorageIp();
     C_Terminal();
     ~C_Terminal();
 
