@@ -7,7 +7,6 @@
 #include"tcpClient.h"
 #pragma comment(lib, "ws2_32.lib")
 
-#define SERVER_IP "127.0.0.1"
 #define SERVER_PORT 56050
 
 C_TcpClient::C_TcpClient(C_Listener* pListener)
@@ -72,7 +71,7 @@ int C_TcpClient::Run(std::string serverAddress)
         uint32_t dataLength;
 
         // 接收4字节的数据长度
-        result = recv(ConnectSocket, (char*)&dataLength, sizeof(dataLength), 0);
+        result = recv(ConnectSocket, (char*)&dataLength, sizeof(dataLength), MSG_WAITALL);
         if (result == SOCKET_ERROR) {
             std::cerr << "recv failed: " << WSAGetLastError() << std::endl;
             break;

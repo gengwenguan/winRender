@@ -52,7 +52,7 @@ int C_H264Decode::Decode(char* data, int dataLen)
 
     int ret = avcodec_send_packet(m_codec_context, m_packet);
     if (ret < 0) {
-        std::cerr << "Error sending a packet for decoding" << std::endl;
+        std::cerr << "Error sending a packet for decoding ret:%d" << ret << std::endl;
         return -1;
     }
 
